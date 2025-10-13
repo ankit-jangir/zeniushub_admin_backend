@@ -1,0 +1,26 @@
+{
+  "name": {
+    "x": 350,
+    "y": 445,
+    "fontSize": "35px",
+    "color": "#000000"
+  },
+  "startDate": {
+    "x": 350,
+    "y": 528,
+    "fontSize": "24px",
+    "color": "#000000"
+  },
+  "endDate": {
+    "x": 550,
+    "y": 528,
+    "fontSize": "24px",
+    "color": "#000000"
+  },
+   "course_name": {
+    "x": 650,
+    "y": 490,
+    "fontSize": "24px",
+    "color": "#000000"
+  }
+}

@@ -1,0 +1,11 @@
+node_modules
+.env
+
+
+# !src/assets/studentDocs/.gitkeep
+# !src/assets/attachments/.gitkeep
+# !src/assets/banners/.gitkeep
+# !src/assets/template/.gitkeep
+# !src/assets/receipts/.gitkeep
+# !src/assets/schoolImages/.gitkeep
+# !src/assets/excel/.gitkeep

@@ -1,0 +1,38 @@
+<!-- This file overlays data on top of a PNG background. -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        width: <%= width %>px;
+        height: <%= height %>px;
+        background: url("data:image/png;base64,<%= imageBase64 %>") no-repeat;
+        background-size: cover;
+        font-family: "Arial", sans-serif;
+        position: relative;
+      }
+      .field {
+        position: absolute;
+        font-weight: bold;
+        white-space: nowrap;
+      }
+    </style>
+  </head>
+  <body>
+    <% Object.keys(config).forEach(field => { %>
+    <div
+      class="field"
+      style="
+        top: <%= config[field].y %>px;
+        left: <%= config[field].x %>px;
+        font-size: <%= config[field].fontSize %>;
+        color: <%= config[field].color %>;
+      "
+    >
+      <%= data[field] %>
+    </div>
+    <% }) %>
+  </body>
+</html>

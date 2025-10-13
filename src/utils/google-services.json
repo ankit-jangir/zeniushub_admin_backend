@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1050006773082",
+    "project_id": "first-of-notification",
+    "storage_bucket": "first-of-notification.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1050006773082:android:b642cec30a138663f56763",
+        "android_client_info": {
+          "package_name": "edvice.in"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBWpyVk3ngxpv7AHiBHBgXYACAV88JnRA4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
