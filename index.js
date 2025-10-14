@@ -8,7 +8,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // const cron = require('node-cron');
-// const db = require("./src/models");
+const db = require("./src/models");
 const cors = require("cors");
 const { try_catch } = require("./src/utils/tryCatch.handler");
 const { getBlob, deleteAllBlobs } = require("./src/utils/azureUploader");
@@ -28,7 +28,7 @@ const allowedOrigins = [
   "http://localhost:3001",
   "http://localhost:3002",
   "http://localhost:3003",
-  "https://adminv2-dev.intellix360.in"
+  // "https://adminv2-dev.intellix360.in"
 ];
 
 app.use(

@@ -1,5 +1,6 @@
 'use strict';
 /** @type {import('sequelize-cli').Migration} */
+
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Expenses', {
@@ -58,9 +59,10 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    // ENUM ko rollback karte time dropEnum bhi karna padta hai
+    // Drop Expenses table
     await queryInterface.dropTable('Expenses');
-    // ENUM ko clean karne ke liye:
+
+    // Clean ENUM type
     await queryInterface.sequelize.query('DROP TYPE IF EXISTS "enum_Expenses_paymentMethod";');
   }
 };

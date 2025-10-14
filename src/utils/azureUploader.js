@@ -114,117 +114,125 @@
 //   getBlob
 // };
 
-require("dotenv").config();
-const {
-  BlobServiceClient,
-  StorageSharedKeyCredential,
-} = require("@azure/storage-blob");
-const path = require("path");
-const customError = require("./error.handler");
-const fs = require("fs").promises;
-const account = process.env.AZURE_ACCOUNT_NAME; // "indibaba"
-const accountKey = process.env.AZURE_ACCOUNT_KEY; // your secret key
-const containerName = process.env.AZURE_CONTAINER_NAME; // "indibaba-chat"
+// require("dotenv").config();
+// const {
+//   BlobServiceClient,
+//   StorageSharedKeyCredential,
+// } = require("@azure/storage-blob");
+// const path = require("path");
+// const customError = require("./error.handler");
+// const fs = require("fs").promises;
+// const account = process.env.AZURE_ACCOUNT_NAME; // "indibaba"
+// const accountKey = process.env.AZURE_ACCOUNT_KEY; // your secret key
+// const containerName = process.env.AZURE_CONTAINER_NAME; // "indibaba-chat"
 
-const sharedKeyCredential = new StorageSharedKeyCredential(account, accountKey);
-const blobServiceClient = new BlobServiceClient(
-  `https://${account}.blob.core.windows.net`,
-  sharedKeyCredential
-);
-const containerClient = blobServiceClient.getContainerClient(containerName);
+// const sharedKeyCredential = new StorageSharedKeyCredential(account, accountKey);
+// const blobServiceClient = new BlobServiceClient(
+//   `https://${account}.blob.core.windows.net`,
+//   sharedKeyCredential
+// );
+// const containerClient = blobServiceClient.getContainerClient(containerName);
 
-// Optional container connection check at startup
-async function checkConnection() {
-  const exists = await containerClient.exists();
-  console.log(
-    exists
-      ? `✅ Connected! Container exists: ${containerName}`
-      : `❌ Container does NOT exist: ${containerName}`
-  );
-}
-checkConnection();
+// // Optional container connection check at startup
+// async function checkConnection() {
+//   const exists = await containerClient.exists();
+//   console.log(
+//     exists
+//       ? `✅ Connected! Container exists: ${containerName}`
+//       : `❌ Container does NOT exist: ${containerName}`
+//   );
+// }
+// checkConnection();
 
-async function uploadFileToAzure(buffer, blobPath, mimetype) {
-  try {
-    const blockBlobClient = containerClient.getBlockBlobClient(blobPath);
+// async function uploadFileToAzure(buffer, blobPath, mimetype) {
+//   try {
+//     const blockBlobClient = containerClient.getBlockBlobClient(blobPath);
 
-    const uploadResponse = await blockBlobClient.uploadData(buffer, {
-      blobHTTPHeaders: {
-        blobContentType: `application/${mimetype}`,
-      },
-    });
+//     const uploadResponse = await blockBlobClient.uploadData(buffer, {
+//       blobHTTPHeaders: {
+//         blobContentType: `application/${mimetype}`,
+//       },
+//     });
 
-    console.log(`✅ Upload successful! Blob: ${uploadResponse}`);
-    return {
-      success: true,
-      url: blockBlobClient.url,
-      details: uploadResponse,
-    };
-  } catch (error) {
-    console.error("❌ Upload failed:", error.message);
-    return { success: false, error: error.message };
-  }
-}
+//     console.log(`✅ Upload successful! Blob: ${uploadResponse}`);
+//     return {
+//       success: true,
+//       url: blockBlobClient.url,
+//       details: uploadResponse,
+//     };
+//   } catch (error) {
+//     console.error("❌ Upload failed:", error.message);
+//     return { success: false, error: error.message };
+//   }
+// }
 
-const getBlob = async (fileName) => {
-  try {
-    const containerExists = await containerClient.exists();
-    if (!containerExists) {
-      throw new customError("Container does not exist in blob storage", 500);
-    }
+// const getBlob = async (fileName) => {
+//   try {
+//     const containerExists = await containerClient.exists();
+//     if (!containerExists) {
+//       throw new customError("Container does not exist in blob storage", 500);
+//     }
 
-    const blobClient = containerClient.getBlobClient(fileName);
-    const blobExists = await blobClient.exists();
-    if (!blobExists) {
-      throw new customError("Resource not found", 404);
-    }
+//     const blobClient = containerClient.getBlobClient(fileName);
+//     const blobExists = await blobClient.exists();
+//     if (!blobExists) {
+//       throw new customError("Resource not found", 404);
+//     }
 
-    const downloadBlockBlobResponse = await blobClient.download();
-    return downloadBlockBlobResponse;
-  } catch (err) {
-    let errcode = err.statusCode || 500;
-    throw new customError(err.message, errcode);
-  }
-};
+//     const downloadBlockBlobResponse = await blobClient.download();
+//     return downloadBlockBlobResponse;
+//   } catch (err) {
+//     let errcode = err.statusCode || 500;
+//     throw new customError(err.message, errcode);
+//   }
+// };
 
-const deleteFromAzure = async (imageUrl) => {
-  try {
-    const blobName = imageUrl.split("/").pop(); // Extract file name
-    const blobClient = containerClient.getBlobClient(blobName);
-    await blobClient.deleteIfExists();
-    console.log(`🗑️ Deleted blob: ${blobName}`);
-  } catch (err) {
-    console.error("Azure delete error:", err.message);
-  }
-};
-async function deleteAllBlobs() {
-  // Use the already defined credentials and container name
-  const sharedKeyCredential = new StorageSharedKeyCredential(
-    account,
-    accountKey
-  );
-  const blobServiceClient = new BlobServiceClient(
-    `https://${account}.blob.core.windows.net`,
-    sharedKeyCredential
-  );
-  const containerClient = blobServiceClient.getContainerClient(containerName);
+// const deleteFromAzure = async (imageUrl) => {
+//   try {
+//     const blobName = imageUrl.split("/").pop(); // Extract file name
+//     const blobClient = containerClient.getBlobClient(blobName);
+//     await blobClient.deleteIfExists();
+//     console.log(`🗑️ Deleted blob: ${blobName}`);
+//   } catch (err) {
+//     console.error("Azure delete error:", err.message);
+//   }
+// };
+// async function deleteAllBlobs() {
+//   // Use the already defined credentials and container name
+//   const sharedKeyCredential = new StorageSharedKeyCredential(
+//     account,
+//     accountKey
+//   );
+//   const blobServiceClient = new BlobServiceClient(
+//     `https://${account}.blob.core.windows.net`,
+//     sharedKeyCredential
+//   );
+//   const containerClient = blobServiceClient.getContainerClient(containerName);
 
-  console.log(`Deleting all blobs in container: ${containerName}`);
+//   console.log(`Deleting all blobs in container: ${containerName}`);
 
-  // List and delete all blobs
-  for await (const blob of containerClient.listBlobsFlat()) {
-    const blockBlobClient = containerClient.getBlockBlobClient(blob.name);
-    await blockBlobClient.deleteIfExists();
-    console.log(`🗑️ Deleted blob: ${blob.name}`);
-  }
+//   // List and delete all blobs
+//   for await (const blob of containerClient.listBlobsFlat()) {
+//     const blockBlobClient = containerClient.getBlockBlobClient(blob.name);
+//     await blockBlobClient.deleteIfExists();
+//     console.log(`🗑️ Deleted blob: ${blob.name}`);
+//   }
 
-  console.log("✅ All blobs deleted.");
-}
+//   console.log("✅ All blobs deleted.");
+// }
+
+// module.exports = {
+//   containerClient,
+//   uploadFileToAzure,
+//   getBlob,
+//   deleteFromAzure,
+//   deleteAllBlobs,
+// };
+
+
+
 
 module.exports = {
-  containerClient,
-  uploadFileToAzure,
-  getBlob,
-  deleteFromAzure,
-  deleteAllBlobs,
+  getBlob: async () => { return { readableStreamBody: null }; },
+  deleteAllBlobs: async () => {}
 };
