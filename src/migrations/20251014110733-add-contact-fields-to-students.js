@@ -15,16 +15,12 @@ module.exports = {
       unique: false
     });
 
-    await queryInterface.addColumn('students', 'contact_no', {
-      type: Sequelize.STRING,
-      allowNull: true,
-      unique: false
-    });
+
   },
 
   async down(queryInterface, Sequelize) {
     await queryInterface.removeColumn('students', 'father_contact_no');
     await queryInterface.removeColumn('students', 'mother_contact_no');
-    await queryInterface.removeColumn('students', 'contact_no');
+
   }
 };

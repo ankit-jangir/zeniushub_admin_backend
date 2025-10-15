@@ -25,6 +25,7 @@ const student = {
     // console.log("Request body:", req.body);
 
     const studentData = req.body;
+    
     console.log("studentData : :", studentData);
 
     const blobFolder = `studentsDocs`;
